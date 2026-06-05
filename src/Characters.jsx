@@ -10,6 +10,20 @@ import ChromaStone from './asset/ChromaStone.png'
 import EyeGuy from './asset/EyeGuy.png'
 import EchoEcho from './asset/EchoEcho.png'
 import FeedBack from './asset/FeedBack.png'
+import Bigchill from './asset/Bigchill.png'
+import Eatle from './asset/Eatle.png'
+import Ghostfreak from './asset/Ghostfreak.png'
+import Gravattack from './asset/Gravattack.png'
+import Greymatter from './asset/Greymatter.png'
+import KickinHawk from './asset/KickinHawk.png'
+import Ripjaws from './asset/Ripjaws.png'
+import Swampfire from './asset/Swampfire.png'
+import Waterguy from './asset/Waterguy.png'
+import Wildmutt from './asset/Wildmutt.png'
+import Armodrillo from './asset/Armodrillo.png'
+import Goop from './asset/Goop.png'
+import WayBig from './asset/WayBig.png'
+import sound from './asset/sound.mp3'
 
 const aliens = [
   { name: 'Ampfibian',   image: electrowater, color: '#00cfff', species: 'Amperi',        powers: 'Electrokinesis, Flight, Intangibility' },
@@ -22,16 +36,31 @@ const aliens = [
   { name: 'EyeGuy',      image: EyeGuy,       color: '#00ffaa', species: 'Opticoid',      powers: 'Multi-Eye Vision, Energy Beams' },
   { name: 'EchoEcho',    image: EchoEcho,     color: '#ffffff', species: 'Sonorosian',    powers: 'Sonic Screams, Self-Duplication' },
   { name: 'FeedBack',    image: FeedBack,     color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'Bigchill',    image: Bigchill,     color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'Eatle',       image: Eatle,        color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'Ghostfreak',  image: Ghostfreak,   color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'Gravattack',  image: Gravattack,   color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'Greymatter',  image: Greymatter,   color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'KickinHawk',  image: KickinHawk,   color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'Ripjaws',     image: Ripjaws,      color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
+  { name: 'Swampfire',   image: Swampfire,    color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
+  { name: 'Waterguy',    image: Waterguy,     color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
+  { name: 'Wildmutt',    image: Wildmutt,     color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
+  { name: 'WayBig',      image: WayBig,       color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
+  { name: 'Goop',        image: Goop,         color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
+  { name: 'Armodrillo',  image: Armodrillo,   color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
 ]
 
-const RING_COUNT = 6   // aliens surrounding the center
-const RADIUS     = 240 // px from center of wheel to center of ring alien
+const RING_COUNT = 6   
+const RADIUS     = 240 
 
 export default function Characters() {
   const [current, setCurrent] = useState(0)
   const total = aliens.length
 
   const handleClick = () => {
+    const audio = new Audio(sound)
+    audio.play()
     setCurrent(prev => (prev + 1) % total)
   }
 
