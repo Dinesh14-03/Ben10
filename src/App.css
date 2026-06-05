@@ -1,0 +1,288 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Base {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: blur(8px);
+}
+
+.Overlay {
+  position: absolute;
+  top: 50%;
+  left: 85%;
+  width: 20%;
+  transform: translate(-50%, -50%); 
+}
+
+.card{
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  transform: translateY(-50%);
+  width: 700px;
+  height: 500px;
+  background: rgba(0, 20, 0); 
+  border: 2px solid #39ff14;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 0 20px #39ff1466;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 2.2rem;
+  color: #ffffff;
+  text-shadow: 0 0 5px #b0f5a4;
+  font-family: 'Arial Black', sans-serif;
+  letter-spacing: 2px;
+}
+
+.desc {
+  font-size: 1.35rem;
+  color: #c8ffc8;
+  line-height: 1.6;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 12px 24px;
+  background: #39ff14;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px #39ff14;
+  align-self: center;
+}
+
+.btn:hover {
+  background: #000;
+  color: #39ff14;
+  border: 2px solid #39ff14;
+}
+
+.video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.video-btn {
+  padding: 12px 24px;
+  background: #39ff14;
+  color: #000;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+}
+
+/* Page layout: wheel left | card right */
+.char-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  width: 100vw;
+  height: 100vh;
+  background: #050d05;
+  overflow: hidden;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+ 
+/* ── LEFT: Wheel ── */
+.wheel-section {
+  position: relative;
+  width: 660px;
+  height: 660px;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+}
+ 
+/* Decorative rings removed */
+ 
+/* Center alien – absolutely placed at exact middle */
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, #0a1f0a 60%, transparent 100%);
+  border-radius: 50%;
+  border: 3px solid #39ff14;
+  box-shadow: 0 0 30px #39ff1480, 0 0 60px #39ff1430;
+  transition: box-shadow 0.4s ease;
+}
+.wheel-center:hover {
+  box-shadow: 0 0 40px #39ff14, 0 0 80px #39ff1450;
+}
+ 
+.alien-center {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  animation: spin-in 0.35s ease;
+  transition: filter 0.4s;
+}
+ 
+/* Ring slots – centered at wheel midpoint, offset by JS transform */
+.wheel-slot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+ 
+.alien-ring {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  opacity: 0.45;
+  filter: blur(1.5px) grayscale(30%);
+  transition: all 0.5s ease;
+}
+.wheel-slot:hover .alien-ring {
+  opacity: 0.75;
+  filter: blur(0) grayscale(0%);
+}
+ 
+.click-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: #39ff1466;
+  text-transform: uppercase;
+}
+ 
+/* Center-swap animation */
+@keyframes spin-in {
+  from { opacity: 0; transform: scale(0.5) rotate(-30deg); }
+  to   { opacity: 1; transform: scale(1)   rotate(0deg); }
+}
+ 
+/* ── RIGHT: Info Card ── */
+.info-card {
+  width: 340px;
+  background: rgba(0, 15, 0, 0.92);
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+ 
+.info-alien-preview {
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.info-alien-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: spin-in 0.35s ease;
+}
+ 
+.info-name {
+  font-size: 1.8rem;
+  font-family: 'Arial Black', sans-serif;
+  letter-spacing: 2px;
+  text-align: center;
+  transition: color 0.4s ease;
+}
+ 
+.info-divider {
+  width: 60%;
+  height: 2px;
+  border-radius: 2px;
+  opacity: 0.6;
+  transition: background 0.4s;
+}
+ 
+.info-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+ 
+.info-label {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #39ff1488;
+}
+ 
+.info-value {
+  font-size: 1rem;
+  color: #d4ffd4;
+  line-height: 1.5;
+}
+ 
+.transform-btn {
+  margin-top: 8px;
+  padding: 12px 36px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.transform-btn:hover {
+  filter: brightness(1.2) saturate(1.3);
+  transform: scale(1.05);
+}
