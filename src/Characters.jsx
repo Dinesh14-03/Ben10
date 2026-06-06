@@ -23,12 +23,17 @@ import Wildmutt from './asset/Wildmutt.png'
 import Armodrillo from './asset/Armodrillo.png'
 import Goop from './asset/Goop.png'
 import WayBig from './asset/WayBig.png'
+import Heatblast from './asset/Heatblast.png'
+import HeatblastTransformation from './asset/Heatblast-Transformation.mp4'
+import WildmuttTransformation from './asset/WildmuttTransformation.mp4'
+import DiamondHeadTransformation from './asset/DiamondHeadTransformation.mp4'
+
 import sound from './asset/sound.mp3'
 
 const aliens = [
   { name: 'Ampfibian',   image: electrowater, color: '#00cfff', species: 'Amperi',        powers: 'Electrokinesis, Flight, Intangibility' },
   { name: 'Rath',        image: Rath,         color: '#ff8800', species: 'Appoplexian',   powers: 'Super Strength, Claws, Combat Instinct' },
-  { name: 'Diamondhead', image: diamondhead,  color: '#7df9ff', species: 'Petrosapien',   powers: 'Crystal Generation, Shard Projectiles' },
+  { name: 'Diamondhead', image: diamondhead,  color: '#7df9ff', species: 'Petrosapien',   powers: 'Crystal Generation, Shard Projectiles', video : DiamondHeadTransformation},
   { name: 'TerraSpin',   image: TerraSpin,    color: '#a0ff60', species: 'Geochelone Aerio', powers: 'Wind Generation, Flight, Tornado Spin' },
   { name: 'CannonBolt',  image: CannonBolt,   color: '#ffe066', species: 'Arburian Pelarota', powers: 'Invulnerable Rollout, High Speed Ball' },
   { name: 'Weevil',      image: Weevil,       color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
@@ -45,10 +50,12 @@ const aliens = [
   { name: 'Ripjaws',     image: Ripjaws,      color: '#ffcc00', species: 'Conductoid',    powers: 'Energy Absorption, Electric Blasts' },
   { name: 'Swampfire',   image: Swampfire,    color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
   { name: 'Waterguy',    image: Waterguy,     color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
-  { name: 'Wildmutt',    image: Wildmutt,     color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
+  { name: 'Wildmutt',    image: Wildmutt,     color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' , video : WildmuttTransformation },
   { name: 'WayBig',      image: WayBig,       color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
   { name: 'Goop',        image: Goop,         color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
   { name: 'Armodrillo',  image: Armodrillo,   color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' },
+  { name: 'Heatblast',  image: Heatblast,     color: '#c8ff00', species: 'Lepidopterran', powers: 'Flight, Slime Spit, Tail Stinger' , video : HeatblastTransformation},
+
 ]
 
 const RING_COUNT = 6   
@@ -56,12 +63,21 @@ const RADIUS     = 240
 
 export default function Characters() {
   const [current, setCurrent] = useState(0)
+  const [playingVideo, setPlayingVideo] = useState(null)
   const total = aliens.length
 
   const handleClick = () => {
     const audio = new Audio(sound)
     audio.play()
     setCurrent(prev => (prev + 1) % total)
+  }
+
+  const handleTransform = (e) => {
+    e.stopPropagation() // don't trigger wheel click
+    const alien = aliens[current]
+    if (alien.video) {
+      setPlayingVideo(alien.video)
+    }
   }
 
   // center alien
@@ -74,6 +90,23 @@ export default function Characters() {
 
   return (
     <div className="char-page">
+      {playingVideo && (
+        <div className="video-overlay">
+          <video
+            src={playingVideo}
+            autoPlay
+            className="transform-video"
+            onEnded={() => setPlayingVideo(null)}
+          />
+          {/* Skip button */}
+          <button
+            className="skip-btn"
+            onClick={() => setPlayingVideo(null)}
+          >
+            SKIP ▶
+          </button>
+        </div>
+      )}
 
       {/* ── LEFT: Omnitrix Wheel ── */}
       <div className="wheel-section" onClick={handleClick}>
@@ -144,7 +177,14 @@ export default function Characters() {
 
         <button
           className="transform-btn"
-          style={{ background: centerAlien.color, boxShadow: `0 0 20px ${centerAlien.color}` }}
+          style={{
+            background: centerAlien.color,
+            boxShadow: `0 0 20px ${centerAlien.color}`,
+            opacity: centerAlien.video ? 1 : 0.4,
+            cursor: centerAlien.video ? 'pointer' : 'not-allowed',
+          }}
+          onClick={handleTransform}
+          disabled={!centerAlien.video}
         >
           TRANSFORM
         </button>
